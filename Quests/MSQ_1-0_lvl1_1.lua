@@ -15,7 +15,7 @@ local MSQ_1_0_lvl1_1 = {
             Player:MoveTo(NPC_Grehfarr:GetPos())
             Player:WaitForMoveUntilEntityInReach(NPC_Grehfarr)
             NPC_Grehfarr:Interact()
-            yield("/wait 2")
+            Utility.Wait.double()
             Utility.Dialogue.SelectYes()
             Player:WaitForAvailable()
         elseif(sequence == 255) then

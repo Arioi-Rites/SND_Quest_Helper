@@ -25,7 +25,7 @@ local Q_Making_a_Name = {
             Player:MoveTo(NPC_Skaenrael:GetPos())
             Player:WaitForMoveUntilEntityInReach(NPC_Skaenrael)
             NPC_Skaenrael:Interact()
-            yield("/wait 1")
+            Utility.Wait.short()
             Utility.Dialogue.SelectYes()
             Player:WaitForAvailable()
         elseif(sequence == 2) then

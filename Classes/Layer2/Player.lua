@@ -28,23 +28,23 @@ local Player = {
     --
     WaitForAvailable = function(self)
         repeat
-            yield("/wait 0.1")
+            Utility.Wait.min()
         until IsPlayerAvailable()
     end,
     WaitForMoveEnd = function(self)
         repeat
-            yield("/wait 0.1")
+            Utility.Wait.min()
         until not IsMoving()
     end,
     WaitForMoveUntilEntityInReach = function(self, entity)
         repeat
-            yield("/wait 0.1")
+            Utility.Wait.min()
         until entity:CheckReachable() or (not IsMoving())
         yield("/vnav stop")
     end,
     WaitForCastToEnd = function ()
         repeat
-            yield("/wait 0.1")
+            Utility.Wait.min()
         until not IsPlayerCasting()
     end,
     
@@ -56,7 +56,7 @@ local Player = {
             self:Teleport(Zone.NAMEtoID[ZoneName].requires)
         end
         yield("/tp " .. ZoneName)
-        yield("/wait 1")
+        Utility.Wait.short()
         self:WaitForCastToEnd()
         self:WaitForAvailable()
     end,
@@ -65,7 +65,7 @@ local Player = {
             self:Teleport(Zone.NAMEtoID[ZoneName].requires)
         end
         yield("/li " .. ZoneName)
-        yield("/wait 3")
+        Utility.Wait.double()
         self:WaitForAvailable()
     end,
     Teleport = function(self, ZoneName)
@@ -89,7 +89,7 @@ local Player = {
     --
     MoveTo = function(self, coords)
         yield("/vnav moveto " .. Utility.Coords.Stringify(coords))
-        yield("/wait 1")
+        Utility.Wait.short()
     end,
     EnsureZone = function(self, desiredZone)
         if not self:CheckIfInZone(desiredZone) then
