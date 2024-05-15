@@ -5,9 +5,10 @@ local Quest = {
 	prerequisites = {-1}, -- These are QuestIDs
 	requiredLevel = 999,
 	QuestItems = {},
+	QuestEntities = {},
 
 	Flags = {
-		prereqParsed = false
+		OneTimeChecksDone = false
 	},
 
 	GetComplete = function(self)
@@ -32,14 +33,20 @@ local Quest = {
 		return true
 	end,
 
+	ParseQuestEntities = function(self)
+		for _, entity in pairs(self.QuestEntities) do
+			Utility.Object.Inherit(entity, QuestEntity)
+		end
+	end,
+
 	ParseQuestItems = function(self)
 		for _, item in pairs(self.QuestItems) do
 			Utility.Object.Inherit(item, QuestItem)
 		end
 	end,
 
-	PreExecute = function(self)
-		if not self.Flags.prereqParsed then
+	OneTimeChecks = function(self)
+		if not self.Flags.OneTimeChecksDone then
 			if not self:CheckPrerequisites() then
 				Utility.log("Prerequisites for quest \"" .. self.name .. "\" not met. Stopping execution.")
 				return false
@@ -47,8 +54,9 @@ local Quest = {
 				Utility.log("Required level for quest \"" .. self.name .. "\" not met. Stopping execution. Current level " .. GetLevel() .. " Required level " .. self.requiredLevel)
 				return false
 			end
+			self:ParseQuestEntities()
 			self:ParseQuestItems()
-			self.Flags.prereqParsed = true
+			self.Flags.OneTimeChecksDone = true
 		end
 		return true
 	end,
@@ -57,17 +65,23 @@ local Quest = {
 		return
 	end,
 
-	Execute = function(self)
-        if not self:PreExecute() then
+	Execute = function(self, goalSequence)
+		if not goalSequence then
+			goalSequence = 999
+		end
+		if self:GetComplete() then
+			return true
+		end
+        if not self:OneTimeChecks() then
             return  false
         end
 
-        while not self:GetComplete() do
+        repeat
 			Utility.log("Executing \"" .. self.name .. "\" with sequence " .. self:GetSequence())
             if not self:SequenceLogic() then
                 return false
             end
-        end
+        until (self:GetComplete() or (self:GetSequence() >= goalSequence))
         return true
     end
 }

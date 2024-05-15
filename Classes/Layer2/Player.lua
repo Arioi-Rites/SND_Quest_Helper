@@ -16,7 +16,7 @@ local Player = {
                 return true
             end
         else
-            if self:GetZone() == Zone.NAMEtoID[desiredZone] then
+            if self:GetZone() == Zone.NAMEtoID[desiredZone].id then
                 return true
             end
         end
@@ -42,12 +42,25 @@ local Player = {
         until entity:CheckReachable() or (not IsMoving())
         yield("/vnav stop")
     end,
-    WaitForCastToEnd = function ()
+    WaitForCastToEnd = function (self)
         repeat
             Utility.Wait.min()
         until not IsPlayerCasting()
     end,
+    WaitForCastAndAvailable = function(self)
+        self:WaitForCastToEnd()
+        self:WaitForAvailable()
+    end,
     
+    --
+    -- Actions
+    --
+
+    Interact = function(self, entity)
+        entity:Target()
+		yield("/pinteract")
+	end,
+
     --
     -- Teleport
     --
@@ -91,8 +104,17 @@ local Player = {
         yield("/vnav moveto " .. Utility.Coords.Stringify(coords))
         Utility.Wait.short()
     end,
-    EnsureZone = function(self, desiredZone)
+    MoveUntilEntityInReach = function(self, entity, alwaysUseFallback)
+        self:MoveTo(entity:GetPos(alwaysUseFallback))
+        self:WaitForMoveUntilEntityInReach(entity)
+    end,
+    EnsureZone = function(self, desiredZone, mustAlreadyBeThere)
         if not self:CheckIfInZone(desiredZone) then
+            if mustAlreadyBeThere then
+                Utility.log("Currently in zone " .. Zone.IDtoNAME[self:GetZone()] .. ", desired zone is " .. desiredZone)
+                Utility.log("Player MUST be in desired Zone. Stopping script.")
+                yield("/snd stop")
+            end
             Utility.log("Currently in zone " .. Zone.IDtoNAME[self:GetZone()] .. ", desired zone is " .. desiredZone .. "; Teleporting.")
             self:Teleport(desiredZone)
         end

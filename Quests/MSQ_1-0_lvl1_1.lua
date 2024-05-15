@@ -7,21 +7,18 @@ local MSQ_1_0_lvl1_1 = {
     SequenceLogic = function(self)
         local sequence = self:GetSequence()
         if(sequence == 0) then
-            Player:MoveTo(NPC_Ryssfloh:GetPos())
-            Player:WaitForMoveUntilEntityInReach(NPC_Ryssfloh)
-            NPC_Ryssfloh:Interact()
+            Player:MoveUntilEntityInReach(NPC_Ryssfloh)
+            Player:Interact()
             Player:WaitForAvailable()
         elseif(sequence == 1) then
-            Player:MoveTo(NPC_Grehfarr:GetPos())
-            Player:WaitForMoveUntilEntityInReach(NPC_Grehfarr)
-            NPC_Grehfarr:Interact()
+            Player:MoveUntilEntityInReach(NPC_Grehfarr)
+            Player:Interact()
             Utility.Wait.double()
             Utility.Dialogue.SelectYes()
             Player:WaitForAvailable()
         elseif(sequence == 255) then
-            Player:MoveTo(NPC_Baderon:GetPos())
-            Player:WaitForMoveUntilEntityInReach(NPC_Baderon)
-            NPC_Baderon:Interact()
+            Player:MoveUntilEntityInReach(NPC_Baderon)
+            Player:Interact()
             Player:WaitForAvailable()
         else
             Utility.log("Unexpected quest sequence value! Aborting Quest")

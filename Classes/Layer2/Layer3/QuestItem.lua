@@ -1,12 +1,9 @@
 local QuestItem = {
-    id = -1,
-    required = 0,
-    GetAmount = function(self)
-        return GetItemCount(self.id)
-    end,
+    requiredItemAmount = 0,
+
     AllCollected = function(self)
-        return (self:GetAmount() >= self.required)
+        return (self:GetAmount() >= self.requiredItemAmount)
     end
 }
 
-Utility.Object.Inherit(QuestItem, Entity)
+Utility.Object.Inherit(QuestItem, Item)
