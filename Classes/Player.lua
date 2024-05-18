@@ -61,7 +61,7 @@ local Player = {
 
     Interact = function(self, entity)
         entity:Target()
-		yield("/pinteract")
+		yield("/interact")
 	end,
 
     --
