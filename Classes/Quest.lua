@@ -10,6 +10,7 @@ local Quest = {
 	requiredLevel = 999,
 	QuestItems = {},
 	QuestEntities = {},
+	TemporaryNPCs = {},
 
 	Flags = {
 		OneTimeChecksDone = false
@@ -46,6 +47,12 @@ local Quest = {
 	ParseQuestItems = function(self)
 		for _, item in pairs(self.QuestItems) do
 			Utility.Object.Inherit(item, QuestItem)
+		end
+	end,
+
+	ParseTemporaryNPCs = function(self)
+		for _, npc in pairs(self.TemporaryNPCs) do
+			Utility.Object.Inherit(npc, Entity)
 		end
 	end,
 
