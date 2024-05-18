@@ -1,4 +1,8 @@
-local MSQ_1_0_lvl1_1 = {
+-- @depends Utility.lua
+-- @depends Quest.lua
+-- @depends Player.lua
+
+local Q_MSQ_1_0_lvl1_1 = {
     name = "Coming to Limsa Lominsa",
     id = 65643,
     prerequisites = {},
@@ -27,4 +31,4 @@ local MSQ_1_0_lvl1_1 = {
     end
 }
 
-Utility.Object.Inherit(MSQ_1_0_lvl1_1, Quest)
+Utility.Object.Inherit(Q_MSQ_1_0_lvl1_1, Quest)

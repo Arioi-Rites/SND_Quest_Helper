@@ -1,3 +1,7 @@
+-- @depends Utility.lua
+-- @depends Quest.lua
+-- @depends Player.lua
+
 local Q_Making_a_Name = {
     name = "Making a Name",
     id = 65647,

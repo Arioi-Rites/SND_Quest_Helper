@@ -1,3 +1,6 @@
+-- @depends Utility.lua
+-- @depends Entity.lua
+
 local NPC_Grehfarr = {
     name = "Grehfarr",
     zone = "Limsa_Lower_Decks",

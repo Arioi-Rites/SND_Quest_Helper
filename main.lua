@@ -5,11 +5,15 @@
 --  "Teleporter" (for /tp) MAIN REPO
 --  "Lifestream" (for aeathernet tp within city) https://raw.githubusercontent.com/NightmareXIV/MyDalamudPlugins/main/pluginmaster.json
 
--- Initialization
-yield("/at enabled")
-yield("/nastatus off")
+-- Settings
 
-MSQ_1_0_lvl1_1:Execute()
-MSQ_1_0_lvl1_2:Execute(1)
+yield("/at enabled")        -- Enables TextAdvance
+yield("/nastatus off")      -- Hides sprout status, this gets rid of a lot of social attention
+                            -- TODO Turns off SND Errors on /target fail automatically in SND settings
+
+-- Initialization
+
+Q_MSQ_1_0_lvl1_1:Execute()
+Q_MSQ_1_0_lvl1_2:Execute(1)
 Q_Making_a_Name:Execute()
-MSQ_1_0_lvl1_2:Execute()
+Q_MSQ_1_0_lvl1_2:Execute()

@@ -1,4 +1,8 @@
-local MSQ_1_0_lvl1_2 = {
+-- @depends Utility.lua
+-- @depends Quest.lua
+-- @depends Player.lua
+
+local Q_MSQ_1_0_lvl1_2 = {
     name = "Close to Home",
     id = 65644,
     prerequisites = {65643},
@@ -47,4 +51,4 @@ local MSQ_1_0_lvl1_2 = {
     end
 }
 
-Utility.Object.Inherit(MSQ_1_0_lvl1_2, Quest)
+Utility.Object.Inherit(Q_MSQ_1_0_lvl1_2, Quest)

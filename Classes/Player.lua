@@ -1,3 +1,6 @@
+-- @depends Utility.lua
+-- @depends Zone.lua
+
 local Player = {
     GetPos = function(self)
         return {

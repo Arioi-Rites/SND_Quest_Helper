@@ -1,3 +1,7 @@
+-- @depends Utility.lua
+-- @depends Entity.lua
+-- @depends Item.lua
+
 local QuestEntity = {
     requiredItemAmount = 0,
     type = "prog",

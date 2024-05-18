@@ -1,3 +1,7 @@
+-- @depends Utility.lua
+-- @depends QuestEntity.lua
+-- @depends QuestItem.lua
+
 local Quest = {
 	name = "Undefined",
 	id = -1,

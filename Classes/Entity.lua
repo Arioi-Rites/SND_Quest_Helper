@@ -1,3 +1,5 @@
+-- @depends Utility.lua
+
 local Entity = {
 	name = "Undefined",
 	position = {},
