@@ -1,5 +1,6 @@
 -- @depends Utility.lua
 -- @depends Zone.lua
+-- @depends Entity.lua
 
 local Player = {
     GetPos = function(self)
@@ -33,6 +34,14 @@ local Player = {
         repeat
             Utility.Wait.min()
         until IsPlayerAvailable()
+    end,
+    WaitForAbsolutelyAvailable = function(self)
+        i = 0
+        repeat -- This is for those occasions where things overlap in such a strange way that the former does not suffice
+            self:WaitForAvailable()
+            Utility.Wait.short()
+            i = i + 1
+        until i == 3
     end,
     WaitForMoveEnd = function(self)
         repeat

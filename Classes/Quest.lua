@@ -1,4 +1,6 @@
 -- @depends Utility.lua
+-- @depends Player.lua
+-- @depends Dialogue.lua
 -- @depends QuestEntity.lua
 -- @depends QuestItem.lua
 
@@ -12,9 +14,7 @@ local Quest = {
 	QuestEntities = {},
 	TemporaryNPCs = {},
 
-	Flags = {
-		OneTimeChecksDone = false
-	},
+	Flag_OneTimeChecksDone = false,
 
 	GetComplete = function(self)
 		return IsQuestComplete(self.id)
@@ -57,7 +57,7 @@ local Quest = {
 	end,
 
 	OneTimeChecks = function(self)
-		if not self.Flags.OneTimeChecksDone then
+		if not self.Flag_OneTimeChecksDone then
 			if not self:CheckPrerequisites() then
 				Utility.log("Prerequisites for quest \"" .. self.name .. "\" not met. Stopping execution.")
 				return false
@@ -67,13 +67,16 @@ local Quest = {
 			end
 			self:ParseQuestEntities()
 			self:ParseQuestItems()
-			self.Flags.OneTimeChecksDone = true
+			self.Flag_OneTimeChecksDone = true
 		end
 		return true
 	end,
 
 	SequenceLogic = function(self)
-		return
+		Utility.log("No quest sequence logic defined. Please define a sequence logic for quest \"" .. self.name .. "\"")
+		return false
+		-- In the inherited objects, this is the method the logic gets put into. You can just overwrite it. Look at established
+		-- quests for examples.
 	end,
 
 	Execute = function(self, goalSequence)
@@ -87,12 +90,12 @@ local Quest = {
             return  false
         end
 
-        repeat
+        while ((not self:GetComplete()) and (not (self:GetSequence() >= goalSequence))) do
 			Utility.log("Executing \"" .. self.name .. "\" with sequence " .. self:GetSequence())
             if not self:SequenceLogic() then
                 return false
             end
-        until (self:GetComplete() or (self:GetSequence() >= goalSequence))
+        end
         return true
     end
 }

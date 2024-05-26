@@ -6,12 +6,12 @@
 
 param(
     [Alias("O","Out")]
-    [string]$Output="./SND_Questhelper_FULL.lua"
+    [string]$Output=((split-path -parent $MyInvocation.MyCommand.Definition) + "\SND_Questhelper_FULL.lua")
 ) 
 
 
 # Get the directory of the PowerShell script
-$scriptDir = $PSScriptRoot
+$scriptDir = split-path -parent $MyInvocation.MyCommand.Definition
 
 $classDir = Join-Path -Path $scriptDir -ChildPath "Classes"
 $mainPath = Join-Path -Path $scriptDir -ChildPath "main.lua"

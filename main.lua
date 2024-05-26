@@ -7,7 +7,7 @@
 
 -- Settings
 
-yield("/at enabled")        -- Enables TextAdvance
+yield("/at enable")        -- Enables TextAdvance
 yield("/nastatus off")      -- Hides sprout status, this gets rid of a lot of social attention
                             -- TODO Turns off SND errors on /target fail automatically in SND settings
 

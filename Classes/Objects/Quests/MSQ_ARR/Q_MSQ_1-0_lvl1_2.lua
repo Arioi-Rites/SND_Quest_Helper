@@ -1,6 +1,7 @@
--- @depends Utility.lua
 -- @depends Quest.lua
--- @depends Player.lua
+-- @depends NPC_Grehfarr.lua
+-- @depends NPC_Swozblaet.lua
+-- @depends NPC_Baderon.lua
 
 local Q_MSQ_1_0_lvl1_2 = {
     name = "Close to Home",
@@ -23,22 +24,22 @@ local Q_MSQ_1_0_lvl1_2 = {
         if(sequence == 0) then
             Player:EnsureZone(NPC_Baderon.zone, true)
             Player:MoveUntilEntityInReach(NPC_Baderon)
-            Player:Interact()
+            Player:Interact(NPC_Baderon)
             Player:WaitForAvailable()
         elseif(sequence == 1) then
             Player:EnsureZone(self.QuestEntities.LimsaAetheryte.zone, true)
             Player:MoveUntilEntityInReach(self.QuestEntities.LimsaAetheryte, true)
-            Player:Interact()
+            Player:Interact(self.QuestEntities.LimsaAetheryte)
             Player:WaitForCastAndAvailable()
             -- Objective 1 Done
             Player:MoveUntilEntityInReach(NPC_Swozblaet)
-            Player:Interact()
+            Player:Interact(NPC_Swozblaet)
             Player:WaitForAvailable()
             -- Objective 2 Done
             Player:MoveUntilEntityInReach(NPC_Grehfarr, true)
-            Player:Interact()
+            Player:Interact(NPC_Grehfarr)
             Utility.Wait.double()
-            Utility.Dialogue.SelectYes()
+            Dialogue.SelectYes()
             Player:WaitForAvailable()
         elseif(sequence == 2) then
 
@@ -48,6 +49,7 @@ local Q_MSQ_1_0_lvl1_2 = {
             Utility.log("Unexpected quest sequence value! Aborting Quest")
             return false
         end
+        return true
     end
 }
 

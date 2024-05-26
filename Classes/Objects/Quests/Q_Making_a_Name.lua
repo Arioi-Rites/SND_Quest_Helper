@@ -1,6 +1,7 @@
--- @depends Utility.lua
 -- @depends Quest.lua
--- @depends Player.lua
+-- @depends NPC_Niniya.lua
+-- @depends NPC_Skaenrael.lua
+-- @depends NPC_Ahldskyf.lua
 
 local Q_Making_a_Name = {
     name = "Making a Name",
@@ -23,31 +24,32 @@ local Q_Making_a_Name = {
         if(sequence == 0) then
             Player:EnsureZone(NPC_Niniya.zone, true)
             Player:MoveUntilEntityInReach(NPC_Niniya)
-            Player:Interact()
+            Player:Interact(NPC_Niniya)
             Player:WaitForAvailable()
         elseif(sequence == 1) then
             Player:EnsureZone(NPC_Skaenrael.zone, true)
             Player:MoveUntilEntityInReach(NPC_Skaenrael)
-            Player:Interact()
+            Player:Interact(NPC_Skaenrael)
             Utility.Wait.short()
-            Utility.Dialogue.SelectYes()
+            Dialogue.SelectYes()
             Player:WaitForAvailable()
         elseif(sequence == 2) then
             while not self.QuestEntities.PeculiarHerb:AllCollected() do
                 Player:EnsureZone("Limsa_Lower_Decks", true)
                 Player:MoveUntilEntityInReach(self.QuestEntities.PeculiarHerb)
-                Player:Interact()
+                Player:Interact(self.QuestEntities.PeculiarHerb)
                 Player:WaitForCastAndAvailable()
             end
         elseif(sequence == 255) then
             Player:EnsureZone(NPC_Ahldskyf.zone, true)
             Player:MoveUntilEntityInReach(NPC_Ahldskyf)
-            Player:Interact()
+            Player:Interact(NPC_Ahldskyf)
             Player:WaitForAvailable()
         else
             Utility.log("Unexpected quest sequence value! Aborting Quest")
             return false
         end
+        return true
     end
 }
 

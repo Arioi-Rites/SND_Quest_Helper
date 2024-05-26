@@ -31,12 +31,6 @@ local Utility = {
             return combinedClass
         end
     },
-    Dialogue = {
-        SelectYes = function()
-            yield("/click select_yes")
-            Utility.Wait.veryShort()
-        end
-    },
     log = function(text)
         yield("/e " .. tostring(text))
     end
